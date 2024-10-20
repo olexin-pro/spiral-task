@@ -1,8 +1,8 @@
 {
-    "name": "spiral/app",
+    "name": "olexin-pro/spiral-task",
     "type": "project",
     "license": "MIT",
-    "description": "Spiral Application installer",
+    "description": "Spiral Application",
     "homepage": "https://spiral.dev",
     "support": {
         "issues": "https://github.com/spiral/app/issues",

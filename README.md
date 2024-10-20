@@ -1,4 +1,4 @@
-# My awesome Web application
+# Spiral task manager
 
 Hello developer! Welcome to your new awesome `Web` application built with the Spiral framework.
 

@@ -9,13 +9,11 @@ use App\Support\Enums\TaskPriority;
 use App\Support\Enums\TaskStatus;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Table\Index;
 use Cycle\Annotated\Annotation\Relation;
+use Cycle\Annotated\Annotation\Table\Index;
+use DateTimeInterface;
 
 #[Entity(repository: TaskRepository::class)]
-#[Column(name: 'created_at', type: 'datetime')]
-#[Column(name: 'updated_at', type: 'datetime')]
-#[Column(name: 'deleted_at', type: 'datetime', nullable: true)]
 #[Index(columns: ['status', 'created_at'])]
 class Task
 {
@@ -24,25 +22,41 @@ class Task
 
     public function __construct(
         #[Column(type: 'string')]
-        public string $title,
+        public string             $title,
 
         #[Column(type: 'text', nullable: true)]
-        public ?string $description,
+        public ?string            $description,
 
         #[Column(type: 'text', nullable: true)]
-        public ?string $final_text,
+        public ?string            $final_text,
 
         #[Column(type: 'string', default: 'new', typecast: TaskStatus::class)]
-        public TaskStatus $status,
+        public TaskStatus         $status,
 
         #[Column(type: 'enum(low,middle,high)', default: 'low', typecast: TaskPriority::class)]
-        public TaskPriority $priority,
+        public TaskPriority       $priority,
 
         #[Relation\BelongsTo(target: Task::class, nullable: true, innerKey: 'parent_task_id', outerKey: 'id')]
-        public ?Task $parentTask,
+        public ?Task              $parentTask,
 
         #[Relation\BelongsTo(target: User::class, nullable: false, outerKey: 'id', innerKey: 'assigned_id')]
-        public User $assigned,
-    ) {
+        public User               $assigned,
+
+        #[Column(name: 'created_at', type: 'datetime')]
+        public ?DateTimeInterface $createdAt,
+
+        #[Column(name: 'updated_at', type: 'datetime')]
+        public DateTimeInterface  $updatedAt,
+
+        #[Column(name: 'started_at', type: 'datetime', nullable: true)]
+        public ?DateTimeInterface $startedAt,
+
+        #[Column(name: 'finished_at', type: 'datetime', nullable: true)]
+        public ?DateTimeInterface $finishedAt,
+
+        #[Column(name: 'deleted_at', type: 'datetime', nullable: true)]
+        public ?DateTimeInterface $deletedAt,
+    )
+    {
     }
 }

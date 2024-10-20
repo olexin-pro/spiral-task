@@ -17,14 +17,21 @@ final class TaskView
     {
         return [
             'id'      => $task->id,
-            'author'  => [
+
+            'assigned'  => [
                 'id'   => $task->assigned->id,
                 'name' => $task->assigned->name
             ],
+
             'title'   => $task->title,
             'status'   => $task->status->value,
             'priority'   => $task->priority->value,
             'description' => $task->description,
+
+            'created' => $task->createdAt->format(DATE_ATOM),
+            'updated' => $task->updatedAt->format(DATE_ATOM),
+            'started' => $task->startedAt?->format(DATE_ATOM) ?? null,
+            'finished' => $task->finishedAt?->format(DATE_ATOM) ?? null,
         ];
     }
 

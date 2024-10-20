@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Endpoint\Web;
 
 use App\Database\Task;
+use App\Endpoint\Web\View\TaskGrid;
+use Cycle\ORM\Select;
 use Psr\Http\Message\ResponseInterface;
+use Spiral\DataGrid\Annotation\DataGrid;
 use Spiral\Prototype\Traits\PrototypeTrait;
 use Spiral\Router\Annotation\Route;
 
@@ -25,12 +28,9 @@ class TaskController
     }
 
     #[Route(route: '/api/task/list', name: 'task.list', methods: 'GET')]
-    public function list(): array
+    #[DataGrid(grid: TaskGrid::class)]
+    public function list(): Select
     {
-        $tasks = $this->tasks->findAllWithAuthor();
-
-        return [
-            'tasks' => array_map([$this->taskView, 'map'], $tasks->fetchAll())
-        ];
+        return $this->tasks->findAllWithAuthor();
     }
 }

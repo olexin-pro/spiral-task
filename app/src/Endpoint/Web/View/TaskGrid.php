@@ -16,10 +16,24 @@ use Spiral\Prototype\Annotation\Prototyped;
 class TaskGrid extends GridSchema
 {
     public function __construct(private readonly TaskView $view) {
-
         $this->addFilter('assigned', new Filter\Equals('assigned.id', new Value\IntValue()));
-        $this->addFilter('priority', new Filter\Equals('priority', new Value\EnumValue(new Value\StringValue(), array_column(TaskPriority::cases(), 'value'))));
-//        $this->addFilter('status', new Filter\Equals('status', new Value\EnumValue(new Value\StringValue(), array_column(TaskStatus::cases(), 'value'))));
+        $this->addFilter(
+            'priority',
+            new Filter\Equals('priority', new Value\EnumValue(
+                new Value\StringValue(),
+                ...array_column(TaskPriority::cases(), 'value')
+            ))
+        );
+        $this->addFilter(
+            'status',
+            new Filter\Equals(
+                'status',
+                new Value\EnumValue(
+                    new Value\StringValue(),
+                    ...array_column(TaskStatus::cases(), 'value')
+                )
+            )
+        );
 //        $this->addFilter('created_at', new Filter\Between('created_at',['from', 'to']));
 //        $this->addFilter('updated_at', new Filter\Between('updated_at',['from', 'to']));
 
